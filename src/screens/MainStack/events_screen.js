@@ -14,6 +14,7 @@ import {
 import SearchInput from "../../components/search_input";
 import EventCard from "../../components/event_card";
 import {getEvents, setData} from "../../redux/actions";
+import moment from "moment";
 
 const mapStateToProps = state => ({
     events: state.events,
@@ -33,7 +34,10 @@ class EventsScreen extends React.Component {
             filter: '',
             data: []
         };
-        this.data = [{name: 'aaa', id: 0, is_self_assignable: true}, {name: 'bbb', id: 1}, {name: 'aab', id: 2}]
+        this.data = [{name: 'aaa', id: 0, is_self_assignable: true, start: 1500000753211, end: 1500000783999}, {
+            name: 'bbb',
+            id: 1
+        }, {name: 'aab', id: 2}]
     }
 
     componentDidMount() {
@@ -81,7 +85,9 @@ class EventsScreen extends React.Component {
                               <EventCard key={item.id} color={item.is_self_assignable ? 'transparent' : BLACK}
                                          name={item.name} description={item.description}
                                          group={item.group} //TODO ::::::::::::::::::::::::::::::::::::::::::::::event only for one group
-                                         time={((e = (item.start || '') + (item.end ? ' - ' + item.start : '')) => !!e ? e : undefined)()}
+                                         time={((e =
+                                                 (moment(parseInt(item.start)).locale('ru').format("D MMM YYYY, hh:mm") || '') +
+                                                 (item.end ? ' ' + moment(parseInt(item.end)).locale('ru').format("D MMM YYYY, hh:mm") : '')) => !!e ? e : undefined)()}
                                          onPress={() => {
                                              this.props.setData({currentEvent: item});
                                              this.props.navigation.navigate('details')

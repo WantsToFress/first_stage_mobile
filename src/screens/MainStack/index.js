@@ -8,6 +8,7 @@ import DetailsScreen from "./details_screen";
 import ChatScreen from "./chat_screen";
 import CreateEventScreen from "./create_event_screen";
 import CreateGroupScreen from "./create_group_screen";
+import AddUserScreen from "./add_user_screen";
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,9 @@ class MainStack extends React.Component {
                               options={{headerShown: false}}/>
                 <Stack.Screen name="create_group"
                               component={CreateGroupScreen}
+                              options={{headerShown: false}}/>
+                <Stack.Screen name="add_user"
+                              component={AddUserScreen}
                               options={{headerShown: false}}/>
             </Stack.Navigator>
         )

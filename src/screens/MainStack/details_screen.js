@@ -118,7 +118,8 @@ class DetailsScreen extends React.Component {
                 </View>
                 <FlatList data={this.props.currentEvent.members}
                           style={{marginTop: 20, paddingBottom: 30}}
-                          ItemSeparatorComponent={() => (<View style={{width: '100%', height: 1, backgroundColor: '#576469'}}/>)}
+                          ItemSeparatorComponent={() => (
+                              <View style={{width: '100%', height: 1, backgroundColor: '#576469'}}/>)}
                           renderItem={({item, index}) => (
                               <View key={item.uid} style={{
                                   flexDirection: 'row',

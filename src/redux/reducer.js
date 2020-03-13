@@ -11,6 +11,13 @@ const RootReducer = createReducer(initState, {
         return mergeRight(state, {error: action.payload})
     },
 
+    [actions.getUsers + '_FULFILLED']: (state, action) => {
+        return mergeRight(state, {currentUsers: action.payload.persons})
+    },
+    [actions.getUsers + '_REJECTED']: (state, action) => {
+        return mergeRight(state, {error: action.payload})
+    },
+
     [actions.setData]: (state, action) => {
         return mergeRight(state, action.payload)
     },
