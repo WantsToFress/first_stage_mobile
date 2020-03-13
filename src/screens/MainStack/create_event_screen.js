@@ -12,7 +12,7 @@ import {
     TEXT_COLOR,
     TEXT_COLOR_GRAY, WHITE
 } from "../../constants/colors";
-import {getEvents, setData} from "../../redux/actions";
+import {getEvents, sendNewEvent, setData} from "../../redux/actions";
 import moment from 'moment'
 import 'moment/locale/ru'
 import Icon from "react-native-vector-icons/Ionicons";
@@ -32,7 +32,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    setData: (data) => dispatch(setData(data))
+    setData: (data) => dispatch(setData(data)),
+    sendNewEvent: (data) => dispatch(sendNewEvent(data))
 });
 
 class CreateEventScreen extends React.Component {
@@ -108,7 +109,10 @@ class CreateEventScreen extends React.Component {
                             ))}
                         </Picker>}
                     </View>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('add_user')}>
+                    <TouchableOpacity onPress={async () => {
+                        await this.props.setData({is_admins: false});
+                        this.props.navigation.navigate('add_user')
+                    }}>
                         <Text style={[styles.text, {fontSize: 18}]}>Добавить участников</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={async () => {
@@ -117,7 +121,7 @@ class CreateEventScreen extends React.Component {
                             {
                                 type: this.state.type,
                                 group: this.state.group,
-                                members: this.props.currentMembers
+                                member_ids: this.props.currentMembers.map(e => e.uid)
                             }));
                         this.props.navigation.goBack()
                     }}>

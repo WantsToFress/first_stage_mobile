@@ -20,7 +20,8 @@ import append from "ramda/src/append";
 
 const mapStateToProps = state => ({
     currentUsers: state.currentUsers,
-    user: state.user
+    user: state.user,
+    is_admin: state.is_admin
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -51,7 +52,8 @@ class AddUserScreen extends React.Component {
     }
 
     backAction = () => {
-        this.setData({currentMembers: this.state.members});
+        this.props.setData({currentMembers: this.state.members});
+        this.props.navigation.goBack();
 
         return true;
     };
