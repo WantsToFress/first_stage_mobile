@@ -59,6 +59,7 @@ class AddUserScreen extends React.Component {
     };
 
     render() {
+        //alert(JSON.stringify(this.props.currentUsers))
         return (
             <LinearGradient colors={[DARK_PRIMARY_COLOR, PRIMARY_COLOR]} style={{flex: 1}}>
                 <SearchInput onChange={(text) => this.props.getUsers({filter: text})}/>

@@ -13,6 +13,8 @@ export const call = (method, endpoint, args, data, headers = null) => {
                             id: 0,
                             name: 'Первое событие',
                             description: 'berjnnryjert',
+                            start: 1589523456789,
+                            end: 1589593456789,
                             type: 'OPENED',
                             members: [
                                 {full_name: 'Бухтийчук Владимир Павлович', uid: 0, login: 'v_unempoled'},

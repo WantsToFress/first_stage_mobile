@@ -5,12 +5,12 @@ export const getEvents = createAction('get/events', data => {
     return call('get', `/events/`, null, {});
 });
 
-export const getUser = createAction('get/user', data => {
+export const getUser = createAction('get/user', () => {
     return call('get', `/i/`, null, {});
 });
 
 export const getUsers = createAction('get/users', data => {
-    return call('get', `/persons/`, null, {});
+    return call('get', `/persons/`, null, data);
 });
 
 export const sendNewEvent = createAction('post/event', data => {
