@@ -18,7 +18,6 @@ class RegisterScreen extends React.Component {
         super();
 
         this.state = {};
-        this.data = [{name: 'aaa', id: 0, is_self_assignable: true}, {name: 'bbb', id: 1}, {name: 'aab', id: 2}]
     }
 
     componentDidMount() {

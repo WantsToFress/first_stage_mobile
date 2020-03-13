@@ -30,10 +30,6 @@ class DetailsScreen extends React.Component {
         //
     }
 
-    /*shouldComponentUpdate(nextProps, nextState) {
-        return true
-    }*/
-
     typeToString = (type) => {
         switch (type) {
             case 'GROUP':

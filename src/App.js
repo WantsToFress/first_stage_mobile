@@ -16,7 +16,7 @@ class AppContainer extends React.Component {
         return (
             <SafeAreaProvider>
                 <NavigationContainer>
-                    <Stack.Navigator initialRouteName="MainStack">
+                    <Stack.Navigator initialRouteName="LoadingContainer">
                         <Stack.Screen name="LoadingContainer"
                                       component={LoadingContainer}
                                       options={{headerShown: false}}/>

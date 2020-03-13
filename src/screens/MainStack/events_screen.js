@@ -34,20 +34,16 @@ class EventsScreen extends React.Component {
             filter: '',
             data: []
         };
-        this.data = [{name: 'aaa', id: 0, is_self_assignable: true, start: 1500000753211, end: 1500000783999}, {
-            name: 'bbb',
-            id: 1
-        }, {name: 'aab', id: 2}]
     }
 
     componentDidMount() {
         this.props.getEvents();
-        this.setState({data: this.data});
+        this.setState({data: this.props.events});
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         if (nextState.filter !== this.state.filter) {
-            this.setState({data: this.data.filter(e => e.name.toLowerCase().includes(nextState.filter.toLowerCase()))})
+            this.setState({data: this.props.events.filter(e => e.name.toLowerCase().includes(nextState.filter.toLowerCase()))})
         }
         return true
     }

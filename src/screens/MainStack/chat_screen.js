@@ -12,7 +12,7 @@ import {
     TEXT_COLOR,
     TEXT_COLOR_GRAY, WHITE
 } from "../../constants/colors";
-import {getEvents, setData} from "../../redux/actions";
+import {getEvents, sendMessage, setData, subscribe, unsubscribe} from "../../redux/actions";
 import moment from 'moment'
 import 'moment/locale/ru'
 import Icon from "react-native-vector-icons/Ionicons";
@@ -20,11 +20,15 @@ import {v4 as uuidv4} from 'uuid';
 
 const mapStateToProps = state => ({
     currentEvent: state.currentEvent,
-    user: state.user || {}
+    user: state.user || {},
+    messages: state.messages || []
 });
 
 const mapDispatchToProps = dispatch => ({
-    setData: (data) => dispatch(setData(data))
+    setData: (data) => dispatch(setData(data)),
+    sendMessage: (message) => dispatch(sendMessage(message)),
+    subscribe: (id) => dispatch(subscribe(id)),
+    unsubscribe: () => dispatch(unsubscribe())
 });
 
 class ChatScreen extends React.Component {
@@ -34,28 +38,15 @@ class ChatScreen extends React.Component {
         this.state = {
             height: 0
         };
-        this.data = [{message: 'aaa', time: 54124634, full_name: 'Солнышков Андрей Дмитриевич', uid: 1, id: 1},
-            {message: 'aadssdfgsfdga', time: 54124645, full_name: 'Солнышков Андрей Дмитриевич', uid: 1, id: 2},
-            {message: 'vv', time: 54124683, full_name: 'Солнышков Андрей Дмитриевич', uid: 1, id: 3},
-            {
-                message: 'aeryy6uj 3rth4tyu4ty he tyu 4aa tsr nh4 tg wbktiohwuiogjergu0wgwerugh wioerjgi whtguj qiop wtughiqwjkergkeripg[ekr',
-                time: 54124999,
-                full_name: 'Бухтийчук Владимир Павлович',
-                uid: 2,
-                id: 4
-            },
-            {
-                message: 'argw y weth rtherth erjaa',
-                time: 54129634,
-                full_name: 'Сосновский Роман Викторович',
-                uid: 3,
-                id: 5
-            }
-        ]
     }
 
     componentDidMount() { //TODO load messages data
-        this.setState({data: this.data});
+        this.props.subscribe(this.props.currentEvent.id);
+        this.setState({data: this.props.messages});
+    }
+
+    componentWillUnmount(): void {
+        this.props.unsubscribe()
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -71,7 +62,7 @@ class ChatScreen extends React.Component {
     render() {
         return (
             <LinearGradient colors={[DARK_PRIMARY_COLOR, PRIMARY_COLOR]} style={{flex: 1}}>
-                <FlatList data={this.data} style={{marginHorizontal: 10}} inverted renderItem={({item, index}) => {
+                <FlatList data={this.props.messages} style={{marginHorizontal: 10}} inverted renderItem={({item, index}) => {
                     let inverted = item.uid === this.props.user.uid;
                     let margin = inverted ? {marginLeft: '25%'} : {marginRight: '25%'};
                     return (
