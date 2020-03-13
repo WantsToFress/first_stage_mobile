@@ -45,6 +45,10 @@ class EventsScreen extends React.Component {
         if (nextState.filter !== this.state.filter) {
             this.setState({data: this.props.events.filter(e => e.name.toLowerCase().includes(nextState.filter.toLowerCase()))})
         }
+        if (nextProps.events !== this.props.events) {
+            this.setState({data: nextProps.events.filter(e => e.name.toLowerCase().includes(nextState.filter.toLowerCase()))})
+        }
+
         return true
     }
 
@@ -80,7 +84,7 @@ class EventsScreen extends React.Component {
                           renderItem={({item, index}) => (
                               <EventCard key={item.id} color={item.is_self_assignable ? 'transparent' : BLACK}
                                          name={item.name} description={item.description}
-                                         group={item.group} //TODO ::::::::::::::::::::::::::::::::::::::::::::::event only for one group
+                                         type={item.type}
                                          time={((e =
                                                  (moment(parseInt(item.start)).locale('ru').format("D MMM YYYY, hh:mm") || '') +
                                                  (item.end ? ' ' + moment(parseInt(item.end)).locale('ru').format("D MMM YYYY, hh:mm") : '')) => !!e ? e : undefined)()}

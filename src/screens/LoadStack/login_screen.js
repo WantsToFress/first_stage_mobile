@@ -5,12 +5,14 @@ import LinearGradient from "react-native-linear-gradient";
 import {BLACK, BLUE, DARK_PRIMARY_COLOR, GRAY, LIGHT_BACK, PRIMARY_COLOR, TEXT_COLOR} from "../../constants/colors";
 import SearchInput from "../../components/search_input";
 import EventCard from "../../components/event_card";
-import {getEvents, logIn, setData} from "../../redux/actions";
+import {getEvents, getUser, logIn, setData} from "../../redux/actions";
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+});
 
 const mapDispatchToProps = dispatch => ({
-    logIn: (data) => dispatch(logIn(data))
+    logIn: (data) => dispatch(logIn(data)),
+    getUser: () => dispatch(getUser())
 });
 
 class LoginScreen extends React.Component {
@@ -68,7 +70,11 @@ class LoginScreen extends React.Component {
                             <Text style={[styles.text, {fontSize: 20}]}>Регистрация</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={() => this.props.logIn({login: this.state.login, password: this.state.password})}
+                            onPress={async () => {
+                                await this.props.logIn({login: this.state.login, password: this.state.password})
+                                await this.props.getUser();
+                                await this.props.navigation.navigate('LoadingContainer')
+                            }}
                             style={{backgroundColor: BLUE, borderRadius: 15, paddingHorizontal: 8}}>
                             <Text style={[styles.text, {fontSize: 20}]}>Войти</Text>
                         </TouchableOpacity>

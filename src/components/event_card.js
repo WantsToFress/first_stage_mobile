@@ -4,6 +4,17 @@ import {BLACK, GRAY, LIGHT_BACK, PRIMARY_COLOR, TEXT_COLOR, TEXT_COLOR_GRAY, WHI
 import Icon from "react-native-vector-icons/Ionicons";
 
 class EventCard extends React.Component {
+    typeToString = (type) => {
+        switch (type) {
+            case 'GROUP':
+                return 'Групповое событие';
+            case 'CLOSED':
+                return 'Закрытое событие';
+            default:
+                return 'Открытое событие';
+        }
+    };
+
     render() {
         return (
             <TouchableOpacity onPress={this.props.onPress}
@@ -33,7 +44,7 @@ class EventCard extends React.Component {
                         <Icon name={'md-time'} color={TEXT_COLOR} size={16} style={{marginRight: 5}}/>
                         <Text style={styles.text}>{this.props.time}</Text>
                     </View>
-                    <Text style={[styles.text, {textAlign: 'right'}]}>{this.props.group}</Text>
+                    <Text style={[styles.text, {textAlign: 'right'}]}>{this.typeToString(this.props.type)}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -46,7 +57,7 @@ EventCard.defaultProps = {
     name: 'No name event',
     description: 'No description event',
     time: 'Some time event',
-    group: 'Общее событие'
+    type: 'Общее событие'
 };
 
 const styles = StyleSheet.create({

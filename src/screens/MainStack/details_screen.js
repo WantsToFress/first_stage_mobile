@@ -16,6 +16,7 @@ import SearchInput from "../../components/search_input";
 import EventCard from "../../components/event_card";
 import Icon from "react-native-vector-icons/Ionicons";
 import {setData} from "../../redux/actions";
+import {concat} from "ramda";
 
 const mapStateToProps = state => ({
     currentEvent: state.currentEvent
@@ -112,7 +113,7 @@ class DetailsScreen extends React.Component {
                         </Text>
                     </View>
                 </View>
-                <FlatList data={this.props.currentEvent.members}
+                <FlatList data={concat(this.props.currentEvent.admins, this.props.currentEvent.members)}
                           style={{marginTop: 20, paddingBottom: 30}}
                           ItemSeparatorComponent={() => (
                               <View style={{width: '100%', height: 1, backgroundColor: '#576469'}}/>)}

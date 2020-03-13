@@ -5,12 +5,13 @@ import LinearGradient from "react-native-linear-gradient";
 import {BLACK, BLUE, DARK_PRIMARY_COLOR, GRAY, LIGHT_BACK, PRIMARY_COLOR, TEXT_COLOR} from "../../constants/colors";
 import SearchInput from "../../components/search_input";
 import EventCard from "../../components/event_card";
-import {register} from "../../redux/actions";
+import {getUser, register} from "../../redux/actions";
 
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
-    register: (data) => dispatch(register(data))
+    register: (data) => dispatch(register(data)),
+    getUser: () => dispatch(getUser())
 });
 
 class RegisterScreen extends React.Component {
@@ -76,7 +77,15 @@ class RegisterScreen extends React.Component {
                         selectionColor={BLUE} tintColor={BLUE}/>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
                         <TouchableOpacity
-                            onPress={() => this.props.register({login: this.state.login, password: this.state.password, full_name: this.state.snp})}
+                            onPress={async () => {
+                                await this.props.register({
+                                        login: this.state.login,
+                                        password: this.state.password,
+                                        full_name: this.state.snp
+                                    })
+                                await this.props.getUser();
+                                this.props.navigation.replace('MainStack')
+                            }}
                         style={{width: '100%'}}>
                             <Text style={[styles.text, {fontSize: 20, textAlign: 'center'}]}>Зарегистрироваться</Text>
                         </TouchableOpacity>

@@ -1,17 +1,22 @@
 import {createReducer} from "@reduxjs/toolkit";
 import * as actions from './actions'
 import initState from '../constants/initState'
-import {mergeRight} from 'ramda';
+import {concat, mergeRight} from 'ramda';
 import axios from '../constants/axios'
 import append from "ramda/src/append";
 
 const RootReducer = createReducer(initState, {
     [actions.getEvents + '_FULFILLED']: (state, action) => {
-        alert(JSON.stringify(action.payload))
         return mergeRight(state, {events: action.payload.events})
     },
     [actions.getEvents + '_REJECTED']: (state, action) => {
-        alert(JSON.stringify(action.payload))
+        return mergeRight(state, {error: action.payload})
+    },
+
+    [actions.getUser + '_FULFILLED']: (state, action) => {
+        return mergeRight(state, {user: action.payload.data})
+    },
+    [actions.getUser + '_REJECTED']: (state, action) => {
         return mergeRight(state, {error: action.payload})
     },
 
@@ -30,7 +35,7 @@ const RootReducer = createReducer(initState, {
     },
 
     [actions.subscribe + '_FULFILLED']: (state, action) => {
-        return mergeRight(state, {messages: append(action.payload, state.messages)})
+        return mergeRight(state, {messages: concat(action.payload, state.messages)})
     },
     [actions.subscribe + '_REJECTED']: (state, action) => {
         return mergeRight(state, {error: action.payload})

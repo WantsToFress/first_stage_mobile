@@ -40,9 +40,8 @@ class ChatScreen extends React.Component {
         };
     }
 
-    componentDidMount() { //TODO load messages data
+    componentDidMount() {
         this.props.subscribe(this.props.currentEvent.id);
-        this.setState({data: this.props.messages});
     }
 
     componentWillUnmount(): void {
@@ -92,6 +91,8 @@ class ChatScreen extends React.Component {
                         id: uuidv4(),
                         uid: this.props.user.id,
                         full_name: this.props.user.full_name,
+                        login: this.props.user.login,
+                        event_id: this.props.currentEvent.id,
                         time: moment().valueOf()
                     })}>
                         <Icon name={'ios-paper-plane'} size={25} color={BLUE} style={styles.image}/>
